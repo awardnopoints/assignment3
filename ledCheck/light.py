@@ -33,3 +33,11 @@ class Light:
             for j in range(b, y+1):
                 if i < self.side and j < self.side:
                     self.grid[i][j] = not self.grid[i][j]
+    
+    def count(self):
+        tally = 0
+        for i in self.grid:
+            for j in i:
+                if j:
+                    tally += 1
+        return tally

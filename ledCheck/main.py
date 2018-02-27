@@ -8,5 +8,3 @@ Created on Tue Feb 27 09:36:01 2018
 
 import light as l
 
-test = l.Light(5)
-print(test.grid)
