@@ -1,22 +1,26 @@
 import unittest
 
-from ..ledCheck.Light import Light
+import ledCheck.light as l
 
-#class TestLights(unittest.TestCase):
-    
-#    def test_size(self, n):
-#        test = Light(n)
-#        count = 0
-#        for i in test:
-#            for j in i:
-#                count += 1
-#        self.assertEqual(count, n**2)
-#    
-#    def test_sizes(self):
-#        test_size(5)
-#        test_size(20)
-#        test_size(1000)
-#        test_size(0)
+from testfunc import test_grids
+
+class TestLights(unittest.TestCase):
+            
+    def test_1(self):
+        self.assertEqual(test_grids(5), 25)
+        self.assertEqual(test_grids(100), 100**2)
+        self.assertEqual(test_grids(1), 1)
+        self.assertEqual(test_grids(0), 0)
+        self.assertEqual(test_grids(5), 5)
+        self.assertEqual(test_grids(5), 5)
+        
+
+        
+    def wrong_test(self):
+        self.assertEqual(test_grids(5), 5)
+        
+    def mytest(self):
+        self.assertFalse(True)        
 
 if __name__ == '__main__':
     unittest.main()
