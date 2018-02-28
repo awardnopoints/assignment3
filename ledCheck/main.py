@@ -9,26 +9,41 @@ Created on Tue Feb 27 09:36:01 2018
 import light as l
 import sys
 import re
+import os
+import urllib.request
 
 def main():
-    file = sys.argv[1]
-    myfile = open(file, 'r')
+    if len(sys.argv) < 2:
+        sys.exit("Must give filename/location or URL as first argument.")
+    target = sys.argv[1]
+    print(target[0:7])
+    if target[0:7] == 'http://':
+        with urllib.request.urlopen(target) as response, open("tempinput.txt", 'wb') as out_file:
+            data = response.read()
+            out_file.write(data)
+            myfile = open("tempinput.txt", 'r')
+    else:
+        myfile = open(target, 'r')
+    print(myfile)
     lines = list(myfile)
-    L = lines[0]
+    print(lines[0:5])
+    L = int(lines[0])
     myLight = l.Light(L)
     for i in range(1, len(lines)):
         obey(lines[i], myLight)
     print(myLight.count())
+    if os.path.isfile("tempinput.txt"):
+        os.remove("tempinput.txt")
         
 def obey(command, light):
     c = regexInterpret(command)
     if c[0]:
         if c[1] == "turn on":
-            light.on(c[2], c[3], c[4], c[5])
+            light.on(int(c[2]), int(c[3]), int(c[4]), int(c[5]))
         elif c[1] == "turn off":
-            light.off(c[2], c[3], c[4], c[5])
+            light.off(int(c[2]), int(c[3]), int(c[4]), int(c[5]))
         elif c[1] == "switch":
-            light.switch(c[2], c[3], c[4], c[5])
+            light.switch(int(c[2]), int(c[3]), int(c[4]), int(c[5]))
 
 def regexInterpret(c):
     result = []
@@ -41,3 +56,7 @@ def regexInterpret(c):
         for i in m.groups():
             result.append(i)
         return result
+    
+    
+if __name__ == '__main__':
+    main()
