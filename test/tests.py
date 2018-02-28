@@ -109,6 +109,18 @@ class TestLights(unittest.TestCase):
         self.assertEqual(myTest.count(), 16)
         myTest.switch(2,6,6,2)
         self.assertEqual(myTest.count(), 9)
+        
+    def testExtraGrid(self):
+        print("Extra Grid")
+        print(9)
+        myTestA = l.Light(10)
+        myTestA.on(5,5,9,9)
+        self.assertEqual(myTestA.count(), 25)
+        for i in range(10, 100):
+            print(i)
+            myTestB = l.Light(10)
+            myTestB.on(5,5,i,i)
+            self.assertEqual(myTestA.count(), myTestB.count())
 
 
 if __name__ == '__main__':

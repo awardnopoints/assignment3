@@ -1,0 +1,4 @@
+input_assign.txt = 400410 lights on
+input_assign_a.txt = 24999879 lights on
+input_assign_b.txt = 29942250 lights on
+input_assign_c.txt = 424632 lights on

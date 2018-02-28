@@ -12,4 +12,8 @@ setup(name='ledCheck',
       version='0.1',
       description='Simple led check',
       author='Eoin Moore',
-      packages=['ledCheck'])
+      packages=['ledCheck'],
+      entry_points={
+              'console_scripts':['ledCheck=ledCheck.main:main']
+              }
+      )
