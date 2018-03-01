@@ -11,7 +11,7 @@ c) return the number of lights currently turned on from that grid
 
 To install:
 
-pip install git+ https://github.com/awardnopoints/assignment3@alternate
+pip install git+https://github.com/awardnopoints/assignment3@alternate
 
 To run after installing:
 
