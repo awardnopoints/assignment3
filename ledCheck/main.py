@@ -13,40 +13,61 @@ import os
 import urllib.request
 
 def main():
+    
+    script_dir = os.path.dirname(__file__)
+    tempinput = os.path.join(script_dir, "tempinput.txt")
+    
     if len(sys.argv) < 2:
         target = input("Please input the filename or URL you would like to pass into the program.")
     else:
         target = sys.argv[1]
+    
     if target[0:7] == 'http://':
-        script_dir = os.path.dirname(__file__)
-        tempinput = os.path.join(script_dir, "tempinput.txt")
         with urllib.request.urlopen(target) as response, open(tempinput, 'wb') as out_file:
             data = response.read()
             out_file.write(data)
             myfile = open(tempinput, 'r')
     else:
         myfile = open(target, 'r')
+    
     lines = list(myfile)
     L = int(lines[0])
     myLight = l.Light(L)
     print("There are", len(lines)-1, "commands to execute.")
-    for i in range(1, len(lines)):
-#        if i == 1 or i % 50 == 0 or i == len(lines)-1:
-        print("Executing command", i, "/", len(lines)-1)
+    i = len(lines)-1
+    unresolved = L**2
+    while i > 0 and unresolved > 0:
+        print(unresolved, "cells currently unresolved.")
+        print("Executing command", len(lines)-i, "/", len(lines)-1)
         obey(lines[i], myLight)
-    print(myLight.count(), "lights on.")
+        i-=1
+        unresolved = myLight.unresolvedCount
+    myLight.resolveSwitches()
+    print()
+    print("Finished!")
+    print()
+    print(myLight.onFinal, "lights on.")
+#    for i in myLight.grid:
+#        print(i)
     if os.path.isfile(tempinput):
         os.remove(tempinput)
         
 def obey(command, light):
     c = regexInterpret(command)
     if c[0]:
+        for j in range(2, 6):
+            c[j] = int(c[j])
+            if c[j] < 0:
+                c[j] = 0
+            elif c[j] >= light.side:
+                c[j] = light.side-1
+        print(c)
         if c[1] == "turn on":
-            light.on(int(c[2]), int(c[3]), int(c[4]), int(c[5]))
+            light.on(c[2], c[3], c[4], c[5])
         elif c[1] == "turn off":
-            light.off(int(c[2]), int(c[3]), int(c[4]), int(c[5]))
+            light.off(c[2], c[3], c[4], c[5])
         elif c[1] == "switch":
-            light.switch(int(c[2]), int(c[3]), int(c[4]), int(c[5]))
+            light.switch(c[2], c[3], c[4], c[5])
 
 def regexInterpret(c):
     result = []
