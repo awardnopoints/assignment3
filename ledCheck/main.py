@@ -11,6 +11,7 @@ import sys
 import re
 import os
 import urllib.request
+import urllib.error
 
 def main():
     
@@ -24,6 +25,19 @@ def main():
         target = sys.argv[1]
     
     if target[0:7] == 'http://':
+        
+        try:
+            conn = urllib.request.urlopen(target)
+        except urllib.error.HTTPError as e:
+            print('HTTPError: {}'.format(e.code))
+            print("Webpage not found.")
+            sys.exit(1)
+        except urllib.error.URLERror as e:
+            print('URLError: {}'.format(e.reason))
+            sys.exit(1)
+        else:
+            print("Valid URL")
+        
         with urllib.request.urlopen(target) as response, open(tempinput, 'wb') as out_file:
             data = response.read()
             out_file.write(data)
