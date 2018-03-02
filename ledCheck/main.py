@@ -69,10 +69,7 @@ def obey(command, light):
     if c[0]:
         for j in range(2, 6):
             c[j] = int(c[j])
-#            if c[j] < 0:
-#                c[j] = 0
-#            elif c[j] >= light.side:
-#                c[j] = light.side-1
+            
         print(c)
         if c[1] == "turn on":
             light.on(c[2], c[3], c[4], c[5])
