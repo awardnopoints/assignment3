@@ -13,6 +13,8 @@ class Light:
             j = max(b, 0)
             while j <= y:
                 self.grid[i][j] = True
+                j += 1
+            i += 1
         
     def off(self, x1, y1, x2, y2):
         a, b, x, y = min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)
@@ -23,6 +25,8 @@ class Light:
             j = max(b, 0)
             while j <= y:
                 self.grid[i][j] = False
+                j += 1
+            i += 1
     
     def switch(self, x1, y1, x2, y2):
         a, b, x, y = min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)
@@ -33,6 +37,8 @@ class Light:
             j = max(b, 0)
             while j <= y:
                 self.grid[i][j] = not self.grid[i][j]
+                j += 1
+            i += 1
     
     def count(self):
         tally = 0
